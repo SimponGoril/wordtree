@@ -1,0 +1,7 @@
+.article {
+    padding: 2rem;
+}
+
+.content::selection {
+    background-color: red;
+}
