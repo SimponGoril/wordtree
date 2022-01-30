@@ -10,17 +10,31 @@ export default function Article<Article>({ article }: ArticleProps) {
     const router = useRouter()
     const {id} = router.query
 
-    const [selectedText, setSelectedText] = useState<string>();
+    const [selectedText, setSelectedText] = useState<string>()
+    const [keyWords, setKeyWords] = useState<string[]>([])
 
     const selectionListener = () => {
         setSelectedText(window.getSelection()?.toString())
+    }
+
+    const addWordHandler = () => {
+        if (!selectedText || keyWords.some(kw => kw === selectedText)) return
+        setKeyWords([...keyWords, selectedText])
+    }
+
+    const getAddWordButtton = () => {
+        if (!selectedText) return
+
+        return <button className={styles.addWordButton} onClick={addWordHandler}>&rarr;</button>
     }
 
     return <div className={styles.article}>
         <h1>Article {id}</h1>
         <div onMouseUp={selectionListener} className={styles.content}>{article.content}</div>
 
-        <h3 >Selected text: {selectedText}</h3>
+        <h3 >Selected text: {selectedText} {getAddWordButtton()}</h3>
+
+        <h4>Keywords:{keyWords.map(kw => ` ${kw},`)}</h4>
         </div>
 }
 

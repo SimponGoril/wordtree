@@ -2,6 +2,24 @@
     padding: 2rem;
 }
 
+.articleLink {
+    text-decoration: underline;
+}
+
+.addWordButton {
+    background-color: #04AA6D;
+    border: none;
+    color: white;
+    padding: 4px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 11px;
+    cursor: pointer;
+    margin: 3px 3px;
+    border-radius: 10px;
+}
+
 .content::selection {
     background-color: red;
 }
