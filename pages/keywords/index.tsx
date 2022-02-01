@@ -44,6 +44,8 @@ export default function KeyWords() {
     }
 
     const addKeywordHandler = () => {
+        if (!newKeyword) return
+        
         setKeywords([...keywords, {id: 666, title: newKeyword}])
         setNewKeyword("")
     }
