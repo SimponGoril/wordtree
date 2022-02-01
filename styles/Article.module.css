@@ -6,6 +6,10 @@
     text-decoration: underline;
 }
 
+.selectedKeyword {
+    background-color: orange;
+}
+
 .addWordButton {
     background-color: #04AA6D;
     border: none;

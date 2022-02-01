@@ -26,6 +26,14 @@ const Home: NextPage = () => {
             </a>
           </Link>
         </div>
+        <div className={styles.grid}>
+          <Link href="/keywords" >
+            <a className={styles.card}>
+              <h2>Keywords &rarr;</h2>
+              <p>See keywords and their relationships</p>
+            </a>
+          </Link>
+        </div>
       </main>
 
       <footer className={styles.footer}>
