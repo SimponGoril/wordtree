@@ -1,5 +1,16 @@
 .article {
     padding: 2rem;
+    display: grid;
+}
+
+.leftColumn {
+    width: 50%;
+    float: left;
+}
+
+.rightColumn {
+    width: 50%;
+    float: right;
 }
 
 .articleLink {
@@ -10,8 +21,22 @@
     background-color: orange;
 }
 
-.addWordButton {
+.addButton {
     background-color: #04AA6D;
+    border: none;
+    color: white;
+    padding: 4px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 11px;
+    cursor: pointer;
+    margin: 3px 3px;
+    border-radius: 10px;
+}
+
+.removeButton {
+    background-color: #da0909;
     border: none;
     color: white;
     padding: 4px;
