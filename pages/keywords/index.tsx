@@ -100,7 +100,6 @@ export default function KeyWords() {
     }    
     
     const removeRelationshipHandler = (relationship: Relationship) => {
-        if (!keywordFrom || !keywordTo || !selectedRelationshipType) return
         setRelationships([...relationships.filter(r => r.id !== relationship.id), ])
     }
 
