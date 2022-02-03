@@ -1,6 +1,5 @@
 import { useRouter } from "next/router"
 import { useState } from "react";
-import styles from '../../styles/Article.module.css'
 
 interface ArticleProps {
     article: any
@@ -25,16 +24,18 @@ export default function Article<Article>({ article }: ArticleProps) {
     const getAddWordButtton = () => {
         if (!selectedText) return
 
-        return <button className={styles.addWordButton} onClick={addWordHandler}>&rarr;</button>
+        return <button className={"text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-1 py-1 text-center ml-1 mb-1 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"} onClick={addWordHandler}>&rarr;</button>
     }
 
-    return <div className={styles.article}>
-        <h1>Article {id}</h1>
-        <div onMouseUp={selectionListener} className={styles.content}>{article.content}</div>
-
-        <h3 >Selected text: {selectedText} {getAddWordButtton()}</h3>
-
-        <h4>Keywords:{keyWords.map(kw => ` ${kw},`)}</h4>
+    return <div className={"flex h-screen flex-col"}>
+            <div className={"p-3"}>
+                <div><h1 className={"text-5xl font-normal leading-normal mt-0 mb-2"}>Article {id}</h1></div>
+                <div onMouseUp={selectionListener} className={""}>{article.content}</div>
+            </div>
+            <div className={"p-3"}>
+                <h3 className={"text-3xl font-normal leading-normal mt-0 mb-2"}>Selected text: {selectedText} {getAddWordButtton()}</h3>
+                <h4 className={"text-2xl font-normal leading-normal mt-0 mb-2"}>Keywords:{keyWords.map(kw => ` ${kw},`)}</h4>
+            </div>
         </div>
 }
 

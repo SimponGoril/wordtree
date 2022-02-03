@@ -1,6 +1,4 @@
-import Link from 'next/link'
 import { useState } from 'react'
-import styles from '../../styles/Article.module.css'
 
 export default function KeyWords() {
 
@@ -46,12 +44,12 @@ export default function KeyWords() {
     }
 
     const getKeywords = () => {
-        return <ol>{keywords.map(kw => { return <li onClick={() => keywordClickHandler(kw) }key={kw.id}>
-            <span className={isKeywordSelected(kw) ? styles.selectedKeyword : "" }>{kw.title}</span></li>})}</ol>      
+        return <ol className={"list-disc pl-6 pt-2"}>{keywords.map(kw => { return <li onClick={() => keywordClickHandler(kw) }key={kw.id}>
+            <span className={isKeywordSelected(kw) ? "bg-orange-500" : "" }>{kw.title}</span></li>})}</ol>      
     }
 
     const getRelationshipTypes = () => {
-        return <ol>{relationshipTypes.map(r => { return <li key={r.id}><span>{r.name}</span></li>})}</ol>      
+        return <ol className={"list-disc pl-6 pt-2"}>{relationshipTypes.map(r => { return <li key={r.id}><span>{r.name}</span></li>})}</ol>      
     }    
     
     const getRelationships = () => {
@@ -66,8 +64,8 @@ export default function KeyWords() {
 
             return `${fromKw?.title} is ${type?.name} ${toKw?.title}`
         }
-        return <ol>{relationships.map(r => { return <li key={r.id}>
-            <span>{getRelationshipNameString(r)} <button className={styles.removeButton} onClick={() => removeRelationshipHandler(r)}>x</button></span>
+        return <ol className={"list-disc pl-6 pt-2"}>{relationships.map(r => { return <li key={r.id}>
+            <span>{getRelationshipNameString(r)} <button className={"text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-1 py-1 text-center mr-1 mb-1 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"} onClick={() => removeRelationshipHandler(r)}>x</button></span>
             </li>})}</ol>      
     }
 
@@ -114,24 +112,26 @@ export default function KeyWords() {
         }
     }
 
-    return <div className={styles.article}>
-            <div>
-                <div className={styles.leftColumn}>
-                    <h1>Keywords </h1>
-                    <input value={newKeyword} onChange={e => setNewKeyword(e.target.value)} placeholder="Type in new Keyword" type={"text"}/>
-                    <button className={styles.addButton} onClick={addKeywordHandler}>&rarr;</button>
-                    {getKeywords()}
-                </div>
-                <div className={styles.rightColumn}>
-                    <h1>Relationship Types</h1>
-                    <input value={newRelationshipType} onChange={e => setNewRelationshipType(e.target.value)} placeholder="Type in new Relationship Type" type={"text"}/>
-                    <button className={styles.addButton} onClick={addRelationshipTypeHandler}>&rarr;</button>
-                    {getRelationshipTypes()}
-                </div>
+    return <div className={"grid grid-cols-2 gap-4 gap-y-5 p-5"}>
+            <div className={""}>
+                <h1 className={"text-2xl font-normal leading-normal mt-0 mb-2"}>Keywords </h1>
+                <input
+                    className={"shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"} 
+                    value={newKeyword} onChange={e => setNewKeyword(e.target.value)} placeholder="Type in new Keyword" type={"text"}/>
+                <button className={"text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-1 py-1 text-center ml-1 mb-1 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"} onClick={addKeywordHandler}>&rarr;</button>
+                {getKeywords()}
+            </div>
+            <div className={""}>
+                <h1 className={"text-2xl font-normal leading-normal mt-0 mb-2"}>Relationship Types</h1>
+                <input 
+                    className={"shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"}
+                    value={newRelationshipType} onChange={e => setNewRelationshipType(e.target.value)} placeholder="Add Relationship Type" type={"text"}/>
+                <button className={"text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-1 py-1 text-center ml-1 mb-1 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"} onClick={addRelationshipTypeHandler}>&rarr;</button>
+                {getRelationshipTypes()}
             </div>
             <div>
-                <h1>Relationships</h1>
-                From {keywordFrom ? keywordFrom.title : "???"} to {keywordTo ? keywordTo.title: "???"} is {getRelationshipSelector()} <button className={styles.addButton} onClick={addRelationshipHandler}>&rarr;</button>
+                <h1 className={"text-2xl font-normal leading-normal mt-0 mb-2"}>Relationships</h1>
+                From {keywordFrom ? keywordFrom.title : "???"} to {keywordTo ? keywordTo.title: "???"} is {getRelationshipSelector()} <button className={"text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-1 py-1 text-center mr-1 mb-1 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"} onClick={addRelationshipHandler}>&rarr;</button>
                 {getRelationships()}
             </div>
         </div>
