@@ -39,8 +39,13 @@ export default function KeyWords() {
     const [keywordTo, setKeywordTo] = useState<Keyword | undefined>()
 
     const isKeywordSelected = (kw: Keyword) => {
-        if (keywordFrom && kw.id === keywordFrom.id) return true
-        if (keywordTo && kw.id === keywordTo.id) return true
+        if (kw.id === keywordFrom?.id) return true
+        if (kw.id === keywordTo?.id) return true
+        return false
+    }    
+    
+    const isRelationshopSelected = (r: RelationshipType) => {
+        if (selectedRelationshipType?.id === r.id) return true
         return false
     }
 
@@ -50,7 +55,9 @@ export default function KeyWords() {
     }
 
     const getRelationshipTypes = () => {
-        return <ol className={"list-disc pl-6 pt-2"}>{relationshipTypes.map(r => { return <li key={r.id}><span>{r.name}</span></li>})}</ol>      
+        return <ol className={"list-disc pl-6 pt-2"}>{relationshipTypes.map(r => { 
+            return <li key={r.id}><span className={isRelationshopSelected(r) ? "bg-orange-500" : "" } onClick={() => setSelectedRelationshipType(r)} >{r.name}</span></li>})}
+            </ol>      
     }    
     
     const getRelationships = () => {
@@ -72,7 +79,7 @@ export default function KeyWords() {
 
     const getRelationshipSelector = () => {
         if (!keywordFrom || !keywordTo) return 
-        return <select onChange={e => setSelectedRelationshipType(relationshipTypes.find(rt => rt.id === Number(e.target.value)))}>
+        return <select value={selectedRelationshipType?.id} onChange={e => setSelectedRelationshipType(relationshipTypes.find(rt => rt.id === Number(e.target.value)))}>
             {relationshipTypes.map(r => <option key={r.id} value={r.id}>{r.name}</option>)}
         </select>
     }
