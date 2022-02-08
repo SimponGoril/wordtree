@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import NetworkGraph from '../../components/networkGraph'
 
 export default function KeyWords() {
 
@@ -112,6 +113,25 @@ export default function KeyWords() {
         }
     }
 
+    const getNodes = () => {
+        return keywords.map(kw => {
+            return {
+                id: kw.id,
+                name: kw.title
+            }
+        })
+    }
+
+    const getLinks = () => {
+        return relationships.map(r => {
+            return {
+                typeId: r.typeId,
+                source: r.fromId,
+                target: r.toId
+            }
+        })
+    }
+
     return <div className={"grid grid-cols-2 gap-4 gap-y-5 p-5"}>
             <div className={""}>
                 <h1 className={"text-2xl font-normal leading-normal mt-0 mb-2"}>Keywords </h1>
@@ -133,6 +153,10 @@ export default function KeyWords() {
                 <h1 className={"text-2xl font-normal leading-normal mt-0 mb-2"}>Relationships</h1>
                 From {keywordFrom ? keywordFrom.title : "???"} to {keywordTo ? keywordTo.title: "???"} is {getRelationshipSelector()} <button className={"text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-1 py-1 text-center mr-1 mb-1 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"} onClick={addRelationshipHandler}>&rarr;</button>
                 {getRelationships()}
+            </div>            
+            <div>
+                <h1 className={"text-2xl font-normal leading-normal mt-0 mb-2"}>Graph</h1>
+                <NetworkGraph nodes={getNodes()} links={getLinks()} />
             </div>
         </div>
 }

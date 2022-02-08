@@ -18,7 +18,7 @@ const Home: NextPage = () => {
         </div>
 
         <div>
-          <div className={"border-solid border-2 border-black rounded p-3 mb-2"}>
+          <div className={"border-solid border-2 border-black rounded hover:bg-black hover:text-white p-3 mb-2"}>
             <Link href="/articles" >
               <a className={""}>
                 <h2>Articles &rarr;</h2>
@@ -26,7 +26,7 @@ const Home: NextPage = () => {
               </a>
             </Link>
           </div>
-          <div className={"border-solid border-2 border-black rounded p-3"}>
+          <div className={"border-solid border-2 border-black rounded hover:bg-black hover:text-white p-3 "}>
             <Link href="/keywords" >
               <a className={""}>
                 <h2>Keywords &rarr;</h2>
