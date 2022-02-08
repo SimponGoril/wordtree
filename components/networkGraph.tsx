@@ -81,7 +81,7 @@ export default function NetworkGraph({ nodes, links }: NetworkGraphProps) {
                 return d.y - 15;
             });
         });
-    })
+    }, nodes.length, links.length)
     
     const refEmpty = useD3((svg: any) => {
         svg.selectAll("*").remove();
@@ -99,7 +99,7 @@ export default function NetworkGraph({ nodes, links }: NetworkGraphProps) {
         .style("text-anchor", "middle")
         .style("font-family", "Arial")
         .style("font-size", "20px");
-    });
+    }, nodes.length, links.length);
     
     const drag = (simulation: any) => {
         function dragstarted(event: any) {
