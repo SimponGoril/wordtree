@@ -6,9 +6,7 @@ export const useD3 = (renderGraph: any, noOfNodes: number, noOfLinks: number) =>
   const ref = React.useRef(null);
  
   useEffect(() => {
-    
     renderGraph(d3.select(ref.current));
- 
     return () => {};
   }, [noOfLinks, noOfNodes]);
  

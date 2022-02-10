@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-export default function Articles() {
+const Articles = () => {
     return <div className={"p-3"}>
             <h1 className={"text-5xl font-normal leading-normal mt-0 mb-2"}>Articles:</h1>
             <Link href={'articles/1'}>
@@ -8,3 +8,5 @@ export default function Articles() {
             </Link>
         </div>
 }
+
+export default Articles

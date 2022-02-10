@@ -1,11 +1,11 @@
 import { useRouter } from "next/router"
-import { useState } from "react";
+import React, { FC, useState } from "react";
 
 interface ArticleProps {
     article: any
 }
 
-export default function Article<Article>({ article }: ArticleProps) {
+const Article:FC<ArticleProps> = ({ article }: ArticleProps) => {
     const router = useRouter()
     const {id} = router.query
 
@@ -69,3 +69,5 @@ export async function getStaticPaths() {
         fallback: false
     }
 }
+
+export default Article

@@ -1,5 +1,5 @@
 
-import React, { RefObject, useEffect, useRef, useState } from "react"
+import React, { FC } from "react"
 import * as d3 from "d3"
 import { useD3 } from "../hooks/useD3";
 
@@ -8,32 +8,45 @@ interface NetworkGraphProps {
     links: any
 }
 
-export default function NetworkGraph({ nodes, links }: NetworkGraphProps) {
+const NetworkGraph: FC<NetworkGraphProps> = ({ nodes, links }: NetworkGraphProps) => {
 
     const ref = useD3(
         (svg: any) => {
         svg.selectAll("*").remove();
-        const height = 300;
-        const width = 300;
+        const height = 500;
+        const width = 500;
         const simulation = d3
             .forceSimulation(nodes)
             .force(
             "link",
-            d3
-                .forceLink(links)
-                .distance(100)
-                .id((d: any) => d.id)
-            )
+            d3.forceLink(links).distance(80).id((d: any) => d.id))
             .force("charge", d3.forceManyBody())
             .force("center", d3.forceCenter(width / 2, height / 2));
+            
         const link = svg
             .append("g")
-            .attr("stroke", "#999")
             .attr("stroke-opacity", 0.6)
             .selectAll("line")
             .data(links)
             .join("line")
-            .attr("stroke-width", 10);
+            .attr("stroke", (d: any) => {
+                return d?.color ? d.color : "#999"
+            })
+            .attr("stroke-width", 3)
+            .attr("marker-end", "url(#end)");
+
+        svg.append("svg:defs").selectAll("marker")
+            .data(["end"])      // Different link/path types can be defined here
+            .enter().append("svg:marker")    // This section adds in the arrows
+            .attr("id", String)
+            .attr("viewBox", "0 -5 10 10")
+            .attr("refX", 15)
+            .attr("refY", 0)
+            .attr("markerWidth", 6)
+            .attr("markerHeight", 6)
+            .attr("orient", "auto")
+            .append("svg:path")
+            .attr("d", "M0,-5L10,0L0,5");        
 
         const node = svg
             .append("g")
@@ -44,15 +57,15 @@ export default function NetworkGraph({ nodes, links }: NetworkGraphProps) {
             .join("circle")
             .attr("r", 10)
             .attr("class", "node")
-            .attr("fill", function (d: any) {
-            if (d.label === "Team") return "red";
-            else if (d.label === "Stream") return "orange";
-            else if (d.label === "Game") return "blue";
-            else if (d.label === "Language") return "purple";
-            })
+            // .attr("fill", function (d: any) {
+            // if (d.label === "Team") return "red";
+            // else if (d.label === "Stream") return "orange";
+            // else if (d.label === "Game") return "blue";
+            // else if (d.label === "Language") return "purple";
+            // })
             .call(drag(simulation));
     
-        var label = svg
+        var nodeLabel = svg
             .selectAll(null)
             .data(nodes)
             .enter()
@@ -61,7 +74,7 @@ export default function NetworkGraph({ nodes, links }: NetworkGraphProps) {
             return d.name; //return d.label for label
             })
             .style("text-anchor", "middle")
-            .style("fill", "red")
+           
             .style("font-family", "Arial")
             .style("font-size", "12px");
     
@@ -73,7 +86,7 @@ export default function NetworkGraph({ nodes, links }: NetworkGraphProps) {
             .attr("y2", (d: any) => d.target.y);
     
             node.attr("cx", (d: any) => d.x).attr("cy", (d: any) => d.y);
-            label
+            nodeLabel
             .attr("x", function (d: any) {
                 return d.x;
             })
@@ -128,10 +141,11 @@ export default function NetworkGraph({ nodes, links }: NetworkGraphProps) {
     if (nodes.length !== 0) {
         return (
         <svg
+            className="border-solid border-2 border-black"
             ref={ref}
             style={{
-            height: 300,
-            width: 300,
+            height: 500,
+            width: 500,
             marginRight: "0px",
             marginLeft: "0px",
             }}
@@ -152,3 +166,4 @@ export default function NetworkGraph({ nodes, links }: NetworkGraphProps) {
     }
 }
     
+export default NetworkGraph

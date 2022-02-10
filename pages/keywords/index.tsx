@@ -1,7 +1,9 @@
+import { color } from 'd3'
 import { useState } from 'react'
+import ColorfulBox from '../../components/colorfulBox'
 import NetworkGraph from '../../components/networkGraph'
 
-export default function KeyWords() {
+const KeyWords = () => {
 
     type Keyword = {
         id: number,
@@ -10,7 +12,8 @@ export default function KeyWords() {
     
     type RelationshipType = {
         id: number,
-        name: string
+        name: string,
+        color?: string
     }
 
     type Relationship = {
@@ -28,8 +31,8 @@ export default function KeyWords() {
         {id: 5, title: 'Jesus'},
     ])
     const [relationshipTypes, setRelationshipTypes] = useState<RelationshipType[]>([
-        {id: 1, name: "Child of"},
-        {id: 2, name: "Parent of"}
+        {id: 1, name: "Child of", color: "red"},
+        {id: 2, name: "Parent of", color: "blue"}
     ])
     const [relationships, setRelationships] = useState<Relationship[]>([])
     const [newKeyword, setNewKeyword] = useState<string>("")
@@ -51,12 +54,14 @@ export default function KeyWords() {
 
     const getKeywords = () => {
         return <ol className={"list-disc pl-6 pt-2"}>{keywords.map(kw => { return <li onClick={() => keywordClickHandler(kw) }key={kw.id}>
-            <span className={isKeywordSelected(kw) ? "bg-orange-500" : "" }>{kw.title}</span></li>})}</ol>      
+            <span className={`cursor-pointer ${isKeywordSelected(kw) ? "bg-orange-500" : ""}`}>{kw.title}</span></li>})}</ol>      
     }
 
     const getRelationshipTypes = () => {
         return <ol className={"list-disc pl-6 pt-2"}>{relationshipTypes.map(r => { 
-            return <li key={r.id}><span className={isRelationshopSelected(r) ? "bg-orange-500" : "" } onClick={() => setSelectedRelationshipType(r)} >{r.name}</span></li>})}
+            return <li key={r.id}>
+                <ColorfulBox color={r.color} /><span className={`ml-2 cursor-pointer ${isRelationshopSelected(r) ? "bg-orange-500" : ""}`} onClick={() => setSelectedRelationshipType(r)}>{r.name} </span>
+                </li>})}
             </ol>      
     }    
     
@@ -92,7 +97,8 @@ export default function KeyWords() {
 
     const addRelationshipTypeHandler = () => {
         if (!newRelationshipType) return
-        setRelationshipTypes([...relationshipTypes, {id: relationshipTypes.length + 1, name: newRelationshipType}])
+        const randomColor = Math.floor(Math.random()*16777215).toString(16)
+        setRelationshipTypes([...relationshipTypes, {id: relationshipTypes.length + 1, name: newRelationshipType, color: `#${randomColor}`}])
         setNewRelationshipType("")
     }    
     
@@ -131,10 +137,13 @@ export default function KeyWords() {
 
     const getLinks = () => {
         return relationships.map(r => {
+            const relationshipType = relationshipTypes.find(rt => rt.id === r.typeId)
+
             return {
                 typeId: r.typeId,
                 source: r.fromId,
-                target: r.toId
+                target: r.toId,
+                color: relationshipType?.color
             }
         })
     }
@@ -167,3 +176,5 @@ export default function KeyWords() {
             </div>
         </div>
 }
+
+export default KeyWords
